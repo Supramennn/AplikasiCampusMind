@@ -20,9 +20,9 @@ public class UserProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
 
-        txtUserName = findViewById(R.id.txt_user_name);
-        txtUserEmail = findViewById(R.id.txt_user_email);
-        txtUserNim = findViewById(R.id.txt_user_nim);
+        //txtUserName = findViewById(R.id.txt_user_name);
+        //txtUserEmail = findViewById(R.id.txt_user_email);
+        //txtUserNim = findViewById(R.id.txt_user_nim);
         btnLogout = findViewById(R.id.btn_logout);
 
         btnLogout.setOnClickListener(v -> {
