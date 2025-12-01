@@ -33,6 +33,6 @@ app.use('/messages', messageRoutes);
 app.use('/assessments', assessmentRoutes);
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server listening on port ${PORT}`);
 });

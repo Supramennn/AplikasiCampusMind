@@ -1,32 +1,42 @@
 package com.campusmind.app.data.api;
 
-import com.campusmind.app.auth.AuthResponse;
-import com.campusmind.app.counseling.chat_ai.AIMessageModel;
-import com.campusmind.app.counseling.chat_human.MessageModel;
-import com.campusmind.app.assessment.AssessmentModel;
+import com.campusmind.app.data.model.LoginRequest;
+import com.campusmind.app.data.model.LoginResponse;
+import com.campusmind.app.data.model.RegisterRequest;
+import com.campusmind.app.data.model.RegisterResponse;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
+import retrofit2.http.Part;
 
 public interface ApiService {
 
-    @POST("auth/signup")
-    Call<AuthResponse> signup(@Body com.campusmind.app.auth.UserModel user);
-
+    // ---------- AUTH ----------
     @POST("auth/login")
-    Call<AuthResponse> login(@Body com.campusmind.app.auth.UserModel user);
+    Call<LoginResponse> login(@Body LoginRequest body);
 
-    @POST("session/{id}/send")
-    Call<MessageModel> sendHumanMessage(
-            @Path("id") int sessionId,
-            @Body MessageModel message
+    @POST("auth/register")
+    Call<RegisterResponse> register(@Body RegisterRequest body);
+
+    // ---------- AI CHAT ----------
+    @POST("/api/ai/message")
+    Call<ResponseBody> sendAiMessage(@Body RequestBody body);
+
+    // ---------- HUMAN CHAT TEXT ----------
+    @POST("chat/human/text")
+    Call<ResponseBody> sendHumanMessage(@Body RequestBody body);
+
+    // ---------- HUMAN CHAT VOICE ----------
+    @Multipart
+    @POST("chat/human/voice")
+    Call<ResponseBody> sendHumanVoice(
+            @Part MultipartBody.Part audio,
+            @Part("sessionId") RequestBody sessionId,
+            @Part("sender") RequestBody sender
     );
-
-    @POST("ai/chat")
-    Call<AIMessageModel> sendAIMessage(@Body AIMessageModel message);
-
-    @POST("assessment/submit")
-    Call<AssessmentModel> submitAssessment(@Body AssessmentModel assessment);
 }
